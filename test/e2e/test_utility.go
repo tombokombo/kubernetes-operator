@@ -21,7 +21,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
 )
 
-const JenkinsTestImage = "jenkins/jenkins:2.319.1-lts"
+const JenkinsTestImage = "jenkins/jenkins:2.319.3-lts"
 
 var (
 	Cfg       *rest.Config
@@ -126,7 +126,7 @@ func RenderJenkinsCR(name, namespace string, seedJob *[]v1alpha2.SeedJob, groovy
 						},
 						Resources: corev1.ResourceRequirements{
 							Requests: corev1.ResourceList{
-								corev1.ResourceCPU:    resource.MustParse("1"),
+								corev1.ResourceCPU:    resource.MustParse("250m"),
 								corev1.ResourceMemory: resource.MustParse("500Mi"),
 							},
 							Limits: corev1.ResourceList{
