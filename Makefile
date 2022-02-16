@@ -225,6 +225,12 @@ container-runtime-images: ## List all local containers
 	@echo "+ $@"
 	$(CONTAINER_RUNTIME_COMMAND) images $(CONTAINER_RUNTIME_EXTRA_ARGS)
 
+define buildx-create-command
+$(CONTAINER_RUNTIME_COMMAND) buildx create \
+	--driver=docker-container \
+	--use
+endef
+
 ## Parameter is version
 define container-runtime-push-command
 $(CONTAINER_RUNTIME_COMMAND) buildx build \
@@ -238,21 +244,25 @@ endef
 .PHONY: container-runtime-push
 container-runtime-push: check-env deepcopy-gen ## Push the container
 	@echo "+ $@"
+	$(call buildx-create-command)
 	$(call container-runtime-push-command,$(BUILD_TAG))
 
 .PHONY: container-runtime-snapshot-push
 container-runtime-snapshot-push: check-env deepcopy-gen
 	@echo "+ $@"
+	$(call buildx-create-command)
 	$(call container-runtime-push-command,$(GITCOMMIT))
 
 .PHONY: container-runtime-release-version
 container-runtime-release-version: check-env deepcopy-gen ## Release image with version tag (in addition to build tag)
 	@echo "+ $@"
+	$(call buildx-create-command)
 	$(call container-runtime-push-command,$(VERSION_TAG))
 
 .PHONY: container-runtime-release-latest
 container-runtime-release-latest: check-env deepcopy-gen ## Release image with latest tags (in addition to build tag)
 	@echo "+ $@"
+	$(call buildx-create-command)
 	$(call container-runtime-push-command,$(LATEST_TAG))
 
 .PHONY: container-runtime-release
