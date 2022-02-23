@@ -47,6 +47,17 @@ jenkins:
   # See https://github.com/jenkinsci/kubernetes-operator/pull/193 for more info
   disableCSRFProtection: false
 
+  # adding entries to a pod's /etc/hosts file provides pod-level override of hostname
+  # resolution when DNS and other options are not applicable.
+  hostAliases: {}
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "foo.local"
+  #   - "bar.local"
+  # - ip: "10.1.2.3"
+  #   hostnames:
+  #   - "foo.remote"
+  #   - "bar.remote"
 
   # validateSecurityWarnings enables or disables validating potential security warnings in Jenkins plugins via admission webhooks.
   validateSecurityWarnings: false

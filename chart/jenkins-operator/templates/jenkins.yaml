@@ -105,6 +105,9 @@ spec:
     priorityClassName: {{ .Values.jenkins.priorityClassName }}
     {{- end }}
     disableCSRFProtection: {{ .Values.jenkins.disableCSRFProtection }}
+    {{- with .Values.jenkins.hostAliases }}
+    hostAliases: {{ toYaml . | nindent 4 }}
+    {{- end }}
     containers:
       - name:  jenkins-master
         image: {{ .Values.jenkins.image }}
