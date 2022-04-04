@@ -234,7 +234,9 @@ func NewJenkinsMasterContainer(jenkins *v1alpha2.Jenkins) corev1.Container {
 		envs = append(envs, jenkinsHomeEnvVar)
 	}
 
-	setLivenessAndReadinessPath(jenkins)
+	if jenkins.Spec.Master.Containers[0].ReadinessProbe.HTTPGet != nil {
+		setLivenessAndReadinessPath(jenkins)
+	}
 
 	return corev1.Container{
 		Name:            JenkinsMasterContainerName,
