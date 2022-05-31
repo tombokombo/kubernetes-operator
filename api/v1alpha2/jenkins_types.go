@@ -527,6 +527,7 @@ const (
 	BasicSSHCredentialType JenkinsCredentialType = "basicSSHUserPrivateKey"
 	// UsernamePasswordCredentialType define username & password Jenkins credential type
 	UsernamePasswordCredentialType JenkinsCredentialType = "usernamePassword"
+	GithubAppCredentialType        JenkinsCredentialType = "githubApp"
 	// ExternalCredentialType defines other credential type
 	ExternalCredentialType JenkinsCredentialType = "external"
 )
@@ -536,6 +537,7 @@ var AllowedJenkinsCredentialMap = map[string]string{
 	string(NoJenkinsCredentialCredentialType): "",
 	string(BasicSSHCredentialType):            "",
 	string(UsernamePasswordCredentialType):    "",
+	string(GithubAppCredentialType):           "",
 	string(ExternalCredentialType):            "",
 }
 
