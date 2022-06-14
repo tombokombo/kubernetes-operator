@@ -18,6 +18,10 @@ type JenkinsSpec struct {
 	// +optional
 	SeedJobs []SeedJob `json:"seedJobs,omitempty"`
 
+	// SeedJobAgentImage defines the image that will be used by the seed job agent. If not defined jenkins/inbound-agent:4.9-1 will be used.
+	// +optional
+	SeedJobAgentImage string `json:"seedJobAgentImage,omitempty"`
+
 	// ValidateSecurityWarnings enables or disables validating potential security warnings in Jenkins plugins via admission webhooks.
 	//+optional
 	ValidateSecurityWarnings bool `json:"validateSecurityWarnings,omitempty"`

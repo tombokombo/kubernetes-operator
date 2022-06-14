@@ -45,6 +45,9 @@ const (
 	// AgentName is the name of seed job agent
 	AgentName = "seed-job-agent"
 
+	// DefaultAgentImage is the default image used for the seed-job agent
+	defaultAgentImage = "jenkins/inbound-agent:4.9-1"
+
 	creatingGroovyScriptName = "seed-job-groovy-script.groovy"
 
 	homeVolumeName = "home"
@@ -416,6 +419,11 @@ func agentDeployment(jenkins *v1alpha2.Jenkins, namespace string, agentName stri
 		return nil, err
 	}
 
+	agentImage := jenkins.Spec.SeedJobAgentImage
+	if jenkins.Spec.SeedJobAgentImage == "" {
+		agentImage = defaultAgentImage
+	}
+
 	suffix := ""
 	if prefix, ok := resources.GetJenkinsOpts(*jenkins)["prefix"]; ok {
 		suffix = prefix
@@ -445,7 +453,7 @@ func agentDeployment(jenkins *v1alpha2.Jenkins, namespace string, agentName stri
 					Containers: []corev1.Container{
 						{
 							Name:  "jnlp",
-							Image: "jenkins/inbound-agent:4.9-1",
+							Image: agentImage,
 							Env: []corev1.EnvVar{
 								{
 									Name: "JENKINS_TUNNEL",
